@@ -1,0 +1,56 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  company     String
+  phone       String?
+  subject     String
+  message     String
+  status      String   @default("UNREAD")
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogEntry {
+  id              String    @id @default(cuid())
+  type            String    // "news" | "external"
+  title           String?
+  slug            String?   @unique
+  excerpt         String?
+  content         String?
+  url             String?
+  coverImageUrl   String?
+  metaDescription String?
+  tags            String?
+  category        String?   @default("Actualités")
+  status          String    @default("draft") // "draft" | "published"
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([slug])
+}
