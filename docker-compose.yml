@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: chainsolutions
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - chainsolutions_data:/app/data
+
+volumes:
+  chainsolutions_data:
+    driver: local
