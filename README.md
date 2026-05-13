@@ -7,7 +7,7 @@ Plateforme FinTech pour les marchés financiers africains (zone UEMOA) — analy
 ### Prérequis
 
 - Docker et Docker Compose installés sur le serveur
-- Domaine `wwx.chainsolutions.fr` pointant vers l'IP du VPS
+- Domaine `www.chainsolutions.fr` pointant vers l'IP du VPS
 - Un reverse proxy (Nginx ou Caddy) pour le SSL/HTTPS
 
 ### Installation
@@ -30,8 +30,8 @@ Remplir les valeurs dans `.env` :
 ```env
 DATABASE_URL="file:/app/data/chainsolutions.db"
 NEXTAUTH_SECRET="<générer avec : openssl rand -base64 32>"
-NEXTAUTH_URL="https://wwx.chainsolutions.fr"
-NEXT_PUBLIC_SITE_URL="https://wwx.chainsolutions.fr"
+NEXTAUTH_URL="https://www.chainsolutions.fr"
+NEXT_PUBLIC_SITE_URL="https://www.chainsolutions.fr"
 ADMIN_EMAIL="contact@chainsolutions.fr"
 RESEND_API_KEY="re_..."
 ```
@@ -52,7 +52,7 @@ docker compose exec app node scripts/seed-admin.ts
 
 Ou via l'endpoint de setup (première fois uniquement) :
 ```
-https://wwx.chainsolutions.fr/api/setup
+https://www.chainsolutions.fr/api/setup
 ```
 
 ### Nginx — Configuration reverse proxy
@@ -60,16 +60,16 @@ https://wwx.chainsolutions.fr/api/setup
 ```nginx
 server {
     listen 80;
-    server_name wwx.chainsolutions.fr;
+    server_name www.chainsolutions.fr;
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name wwx.chainsolutions.fr;
+    server_name www.chainsolutions.fr;
 
-    ssl_certificate /etc/letsencrypt/live/wwx.chainsolutions.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/wwx.chainsolutions.fr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/www.chainsolutions.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.chainsolutions.fr/privkey.pem;
 
     location / {
         proxy_pass http://localhost:3002;
@@ -87,7 +87,7 @@ server {
 
 Certificat SSL avec Let's Encrypt :
 ```bash
-certbot --nginx -d wwx.chainsolutions.fr
+certbot --nginx -d www.chainsolutions.fr
 ```
 
 ### Commandes utiles
